@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>360° Rundgang – Penthouse Wohnung 10</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+<style>
+  :root { --bg:#111; --fg:#f4f2ee; --muted:#b9b4ab; --accent:#c8a96a; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  #pano { position:fixed; inset:0; }
+  .bar { position:fixed; left:16px; right:16px; bottom:16px; display:flex; gap:10px; align-items:flex-end; justify-content:space-between; pointer-events:none; }
+  .title { pointer-events:auto; background:rgba(17,17,17,.62); backdrop-filter:blur(8px); padding:10px 14px; border-radius:10px; }
+  .title b { display:block; font-size:16px; } .title span { color:var(--muted); font-size:13px; }
+  .thumbs { pointer-events:auto; display:flex; gap:8px; }
+  .thumbs button { border:2px solid transparent; padding:0; border-radius:8px; overflow:hidden; cursor:pointer; background:#000; width:96px; height:64px; }
+  .thumbs button.on { border-color:var(--accent); }
+  .thumbs img { width:100%; height:100%; object-fit:cover; display:block; }
+  .lb { position:fixed; inset:0; background:rgba(0,0,0,.92); display:none; align-items:center; justify-content:center; z-index:10; }
+  .lb.open { display:flex; } .lb img { max-width:96vw; max-height:90vh; border-radius:6px; }
+  .lb .x { position:absolute; top:14px; right:18px; color:#fff; font-size:30px; background:none; border:0; cursor:pointer; }
+  .hint { position:fixed; top:16px; left:50%; transform:translateX(-50%); background:rgba(17,17,17,.62); padding:6px 12px; border-radius:999px; font-size:13px; color:var(--muted); transition:opacity .6s; }
+  @media (max-width:600px) { .thumbs button { width:72px; height:48px; } .title b { font-size:14px; } }
+</style>
+</head>
+<body>
+<div id="pano"></div>
+<div class="hint" id="hint">Ziehen zum Umsehen · Scrollen / Pinch zum Zoomen</div>
+<div class="bar">
+  <div class="title"><b>Wohnen · Essen · Kochen</b><span>Penthouse Wohnung 10 · 55,72 m² · Visualisierung</span><span style="display:block;font-size:11px;opacity:.7">Möbelmodelle: Wayfair LLC, Darmstadt Graphics Group (CC BY 4.0, via Khronos glTF Sample Assets)</span></div>
+  <div class="thumbs">
+    <button class="on" title="360° Ansicht" onclick="lbClose()"><img src="pano_wohnen_thumb.jpg" alt="360°"></button>
+    <button title="Foto Wohnbereich" onclick="lbOpen('foto_wohnen.jpg')"><img src="foto_wohnen_thumb.jpg" alt="Wohnbereich"></button>
+    <!--KUECHE--><button hidden title="Foto Küche" onclick="lbOpen('foto_kueche.jpg')"><img src="foto_kueche_thumb.jpg" alt="Küche"></button>
+  </div>
+</div>
+<div class="lb" id="lb" onclick="lbClose()"><button class="x" aria-label="Schließen">×</button><img id="lbimg" alt=""></div>
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<script>
+  pannellum.viewer('pano', {
+    type: 'equirectangular', panorama: 'pano_wohnen.jpg', autoLoad: true,
+    yaw: -120, pitch: -4, hfov: 100, minHfov: 50, maxHfov: 115,
+    autoRotate: -1.5, autoRotateInactivityDelay: 6000,
+    showControls: true, compass: false, showFullscreenCtrl: true
+  });
+  setTimeout(() => document.getElementById('hint').style.opacity = 0, 5000);
+  function lbOpen(src) { document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('open'); }
+  function lbClose() { document.getElementById('lb').classList.remove('open'); }
+</script>
+</body>
+</html>
